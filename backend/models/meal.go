@@ -1,7 +1,7 @@
 package models
 
 type Meal struct {
-	id    int    `json:"id"`
-	name  string `json:"name"`
+	ID    int    `json:"id"`
+	Name  string `json:"name"`
 	Foods []Food `json:"foods"`
 }
