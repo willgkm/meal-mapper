@@ -3,6 +3,8 @@ package database
 import (
 	"database/sql"
 	"log"
+	"os"
+	"path/filepath"
 
 	_ "github.com/mattn/go-sqlite3"
 )
@@ -23,13 +25,19 @@ func Connect() {
 }
 
 func CreateTables() {
+	dir, err := os.Getwd()
+	if err != nil {
+		log.Fatal(err)
+	}
 
-	createTestTable := `CREATE TABLE IF NOT EXISTS tests  ( 
-		id INTEGER PRIMARY KEY AUTOINCREMENT,	
-		name TEXT
-	);`
+	schemaFile := filepath.Join(dir, "database", "tables", "schemas.sql")
 
-	_, err := DB.Exec(createTestTable)
+	schema, err := os.ReadFile(schemaFile)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	_, err = DB.Exec(string(schema))
 	if err != nil {
 		log.Fatal(err)
 	}
