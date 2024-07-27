@@ -105,3 +105,41 @@ func DeleteFoodById(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusNoContent)
 }
+
+func UpdateFoodById(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	id, err := strconv.Atoi(params["id"])
+	if err != nil {
+		http.Error(w, "Invalid food ID", http.StatusBadRequest)
+		return
+	}
+
+	var food models.Food
+	json.NewDecoder(r.Body).Decode(&food)
+
+	stmt, err := database.DB.Prepare("UPDATE foods SET name = ?, weight = ?, portion = ?, calories = ?, protein = ?, carbs = ?, fat = ? WHERE id = ?")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	res, err := stmt.Exec(food.Name, food.Weight, food.Portion, food.Calories, food.Protein, food.Carbs, food.Fat, id)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	rowsAffected, err := res.RowsAffected()
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	if rowsAffected == 0 {
+		http.Error(w, "Food not found", http.StatusNotFound)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(food)
+}
