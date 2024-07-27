@@ -1,8 +1,6 @@
 package routes
 
 import (
-	"encoding/json"
-	"meal-mapper/database"
 	"net/http"
 	"time"
 
@@ -10,22 +8,22 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-func test(w http.ResponseWriter, r *http.Request) {
-	_, err := database.DB.Exec("INSERT INTO tests (name) VALUES (?)", "Will")
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
+// func test(w http.ResponseWriter, r *http.Request) {
+// 	_, err := database.DB.Exec("INSERT INTO tests (name) VALUES (?)", "Will")
+// 	if err != nil {
+// 		http.Error(w, err.Error(), http.StatusInternalServerError)
+// 		return
+// 	}
 
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode("teste")
-}
+// 	w.Header().Set("Content-Type", "application/json")
+// 	json.NewEncoder(w).Encode("teste")
+// }
 
 func SetupRouter() *mux.Router {
 	router := mux.NewRouter()
 
 	router.Use(loggingMiddleware)
-	router.HandleFunc("/test", test).Methods("POST")
+	// router.HandleFunc("/test", test).Methods("POST")
 
 	return router
 }
@@ -40,19 +38,19 @@ func loggingMiddleware(next http.Handler) http.Handler {
 		start := time.Now()
 
 		lrw := &loggingResponseWriter{w, http.StatusOK}
-		
+
 		logrus.WithFields(logrus.Fields{
-            "method": r.Method,
-            "url":    r.URL.Path,
-        }).Info("Request received")
+			"method": r.Method,
+			"url":    r.URL.Path,
+		}).Info("Request received")
 
 		next.ServeHTTP(lrw, r)
 
-        logrus.WithFields(logrus.Fields{
-            "method":     r.Method,
-            "url":        r.URL.Path,
-            "duration":   time.Since(start),
-            "statusCode": lrw.statusCode,
-        }).Info("Request handled")
+		logrus.WithFields(logrus.Fields{
+			"method":     r.Method,
+			"url":        r.URL.Path,
+			"duration":   time.Since(start),
+			"statusCode": lrw.statusCode,
+		}).Info("Request handled")
 	})
 }
