@@ -40,19 +40,19 @@ func loggingMiddleware(next http.Handler) http.Handler {
 		start := time.Now()
 
 		lrw := &loggingResponseWriter{w, http.StatusOK}
-
-		logrus.WithField(logrus.Fields{
-			"method": r.Method,
-			"url":    r.URL.Path,
-		}).Info("Request recived")
+		
+		logrus.WithFields(logrus.Fields{
+            "method": r.Method,
+            "url":    r.URL.Path,
+        }).Info("Request received")
 
 		next.ServeHTTP(lrw, r)
 
-		logrus.WithField(logrus.Fields{
-			"method":     r.Method,
-			"url":        r.URL.Path,
-			"duration":   time.Since(start),
-			"statusCode": lrw.statusCode,
-		}).Info("Request handled")
+        logrus.WithFields(logrus.Fields{
+            "method":     r.Method,
+            "url":        r.URL.Path,
+            "duration":   time.Since(start),
+            "statusCode": lrw.statusCode,
+        }).Info("Request handled")
 	})
 }
