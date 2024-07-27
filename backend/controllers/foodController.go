@@ -5,6 +5,9 @@ import (
 	"meal-mapper/database"
 	"meal-mapper/models"
 	"net/http"
+	"strconv"
+
+	"github.com/gorilla/mux"
 )
 
 func CreateFood(w http.ResponseWriter, r *http.Request) {
@@ -47,4 +50,24 @@ func GetFoods(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(foods)
+}
+
+func GetFoodById(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	id, err := strconv.Atoi(params["id"])
+	if err != nil {
+		http.Error(w, "Invalid food ID", http.StatusBadRequest)
+		return
+	}
+
+	var food models.Food
+	err = database.DB.QueryRow("SELECT * FROM foods WHERE id = ?", id).Scan(
+		&food.ID, &food.Name, &food.Weight, &food.Portion, &food.Calories, &food.Protein, &food.Carbs, &food.Fat)
+	if err != nil {
+		http.Error(w, "Food not found", http.StatusNotFound)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(food)
 }
