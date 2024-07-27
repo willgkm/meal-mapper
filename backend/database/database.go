@@ -11,7 +11,7 @@ import (
 
 var DB *sql.DB
 
-//change the database for a postgress one.
+//TODO: change the database for a postgress one.
 
 func Connect() {
 	var err error
