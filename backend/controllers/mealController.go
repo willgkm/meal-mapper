@@ -5,6 +5,7 @@ import (
 	"meal-mapper/database"
 	"meal-mapper/models"
 	"net/http"
+	"strconv"
 )
 
 func CreateMeal(w http.ResponseWriter, r *http.Request) {
@@ -45,6 +46,14 @@ func CreateMeal(w http.ResponseWriter, r *http.Request) {
 	}
 
 	for _, food := range meal.Foods {
+
+		err = database.DB.QueryRow("SELECT id FROM foods WHERE id = ?", food.ID).Scan(
+			&food.ID)
+		if err != nil {
+			http.Error(w, "Invalid food with ID = "+strconv.Itoa(food.ID), http.StatusInternalServerError)
+			return
+		}
+
 		_, err = stmt.Exec(mealID, food.ID)
 		if err != nil {
 			tx.Rollback()
