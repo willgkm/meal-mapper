@@ -30,24 +30,37 @@ type loggingResponseWriter struct {
 	statusCode int
 }
 
+func (lrw *loggingResponseWriter) WriteHeader(code int) {
+	lrw.statusCode = code
+	lrw.ResponseWriter.WriteHeader(code)
+}
+
 func loggingMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		start := time.Now()
 
 		lrw := &loggingResponseWriter{w, http.StatusOK}
-
 		logrus.WithFields(logrus.Fields{
 			"method": r.Method,
 			"url":    r.URL.Path,
 		}).Info("Request received")
 
 		next.ServeHTTP(lrw, r)
+		if lrw.statusCode >= 500 {
+			logrus.WithFields(logrus.Fields{
+				"method":     r.Method,
+				"url":        r.URL.Path,
+				"duration":   time.Since(start),
+				"statusCode": lrw.statusCode,
+			}).Error("Request handled")
+		} else {
+			logrus.WithFields(logrus.Fields{
+				"method":     r.Method,
+				"url":        r.URL.Path,
+				"duration":   time.Since(start),
+				"statusCode": lrw.statusCode,
+			}).Info("Request handled")
+		}
 
-		logrus.WithFields(logrus.Fields{
-			"method":     r.Method,
-			"url":        r.URL.Path,
-			"duration":   time.Since(start),
-			"statusCode": lrw.statusCode,
-		}).Info("Request handled")
 	})
 }
