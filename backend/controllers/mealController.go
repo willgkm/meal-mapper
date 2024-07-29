@@ -6,6 +6,8 @@ import (
 	"meal-mapper/models"
 	"net/http"
 	"strconv"
+
+	"github.com/gorilla/mux"
 )
 
 func CreateMeal(w http.ResponseWriter, r *http.Request) {
@@ -108,4 +110,41 @@ func GetMeals(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(meals)
+}
+
+func GetMealById(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	id, err := strconv.Atoi(params["id"])
+	if err != nil {
+		http.Error(w, "Invalid food ID", http.StatusBadRequest)
+		return
+	}
+
+	var meal models.Meal
+	err = database.DB.QueryRow("SELECT * FROM Meals WHERE id = ?", id).Scan(
+		&meal.ID, &meal.Name)
+	if err != nil {
+		http.Error(w, "Meal not found", http.StatusNotFound)
+		return
+	}
+
+	foodRows, err := database.DB.Query("SELECT foods.id, foods.name, foods.weight, foods.portion, foods.calories, foods.protein, foods.carbs, foods.fat FROM foods JOIN meal_foods ON foods.id = meal_foods.food_id WHERE meal_foods.meal_id = ?", meal.ID)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	for foodRows.Next() {
+		var food models.Food
+		err := foodRows.Scan(&food.ID, &food.Name, &food.Weight, &food.Portion, &food.Calories, &food.Protein, &food.Carbs, &food.Fat)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		meal.Foods = append(meal.Foods, food)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(meal)
+
 }
