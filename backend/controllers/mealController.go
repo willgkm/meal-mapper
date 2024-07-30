@@ -148,3 +148,38 @@ func GetMealById(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(meal)
 
 }
+
+func DeleteMealById(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	id, err := strconv.Atoi(params["id"])
+
+	if err != nil {
+		http.Error(w, "Invalid meal ID", http.StatusBadRequest)
+		return
+	}
+
+	tx, err := database.DB.Begin()
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	_, err = tx.Exec("DELETE FROM meal_foods WHERE meal_id = ?", id)
+	if err != nil {
+		tx.Rollback()
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	_, err = tx.Exec("DELETE FROM meals WHERE id = ?", id)
+	if err != nil {
+		tx.Rollback()
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	tx.Commit()
+	w.WriteHeader(http.StatusNoContent)
+}
+
+
