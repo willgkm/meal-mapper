@@ -23,6 +23,7 @@ func SetupRouter() *mux.Router {
 	router.HandleFunc("/meal", controllers.GetMeals).Methods("GET")
 	router.HandleFunc("/meal/{id:[0-9]+}", controllers.GetMealById).Methods("GET")
 	router.HandleFunc("/meal/{id:[0-9]+}", controllers.DeleteMealById).Methods("DELETE")
+	router.HandleFunc("/meal/{id:[0-9]+}", controllers.UpdateMealById).Methods("PUT")
 
 	return router
 }

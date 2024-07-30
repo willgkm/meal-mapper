@@ -182,4 +182,54 @@ func DeleteMealById(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusNoContent)
 }
 
+func UpdateMealById(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	id, err := strconv.Atoi(params["id"])
+	if err != nil {
+		http.Error(w, "Invalid meal ID", http.StatusBadRequest)
+		return
+	}
 
+	var meal models.Meal
+	json.NewDecoder(r.Body).Decode(&meal)
+
+	tx, err := database.DB.Begin()
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	_, err = tx.Exec("UPDATE meals SET name = ? WHERE id = ?", meal.Name, id)
+	if err != nil {
+		tx.Rollback()
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	_, err = tx.Exec("DELETE FROM meal_foods WHERE meal_id = ?", id)
+	if err != nil {
+		tx.Rollback()
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	stmt, err := tx.Prepare("INSERT INTO meal_foods(meal_id, food_id) VALUES(?, ?)")
+	if err != nil {
+		tx.Rollback()
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	for _, food := range meal.Foods {
+		_, err = stmt.Exec(id, food.ID)
+		if err != nil {
+			tx.Rollback()
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+	}
+
+	tx.Commit()
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(meal)
+}
