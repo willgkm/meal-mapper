@@ -11,8 +11,9 @@ import (
 
 func SetupRouter() *mux.Router {
 	router := mux.NewRouter()
-
 	router.Use(loggingMiddleware)
+	router.Use(corsMiddleware)
+
 	router.HandleFunc("/food", controllers.CreateFood).Methods("POST")
 	router.HandleFunc("/food", controllers.GetFoods).Methods("GET")
 	router.HandleFunc("/food/{id:[0-9]+}", controllers.GetFoodById).Methods("GET")
@@ -65,5 +66,20 @@ func loggingMiddleware(next http.Handler) http.Handler {
 			}).Info("Request handled")
 		}
 
+	})
+}
+
+func corsMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+
+		if r.Method == "OPTIONS" {
+			w.WriteHeader(http.StatusOK)
+			return
+		}
+
+		next.ServeHTTP(w, r)
 	})
 }
