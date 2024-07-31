@@ -8,4 +8,9 @@ require (
 	github.com/sirupsen/logrus v1.9.3
 )
 
-require golang.org/x/sys v0.22.0 // indirect
+require github.com/felixge/httpsnoop v1.0.3 // indirect
+
+require (
+	github.com/gorilla/handlers v1.5.2
+	golang.org/x/sys v0.22.0 // indirect
+)
