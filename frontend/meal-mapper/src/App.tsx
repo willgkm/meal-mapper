@@ -18,10 +18,12 @@ function App() {
           <Route path="/" element={<div>Home Page</div>} />
           <Route path="/food" element={<Foods />} />
           <Route path="/food/new" element={<FoodForm />} />
+          <Route path="/food/:id" element={<FoodForm />} />
+
           <Route path="/meal" element={<Meals />} />
         </Routes>
       </main>
-      <Footer />
+      {/* <Footer /> */}
     </Router>
   )
 }

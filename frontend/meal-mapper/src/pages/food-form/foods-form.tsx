@@ -1,9 +1,9 @@
 import {Button,Form, Row} from 'react-bootstrap';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Food } from '../../models/Food';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export default function FoodForm() {
 
@@ -20,6 +20,19 @@ export default function FoodForm() {
   });
 
   const navigate = useNavigate();
+  const { id } = useParams();
+  
+  useEffect(() => {
+    if (id) {
+      axios.get(`http://localhost:8910/food/${id}`)
+        .then(response => {
+          setFood(response.data);
+        })
+        .catch(error => {
+          console.error('There was an error fetching the food!', error);
+        });
+    }
+  }, [id]);
 
   async function createFood(event: any) {
     event.preventDefault();
