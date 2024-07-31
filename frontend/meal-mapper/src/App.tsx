@@ -5,16 +5,19 @@ import Footer from './components/footer/footer'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Foods from './pages/food/foods';
 import Meals from './pages/meal/meals';
+import FoodForm from './pages/food-form/foods-form';
 
 function App() {
 
-  return (
+
+  return ( 
     <Router>
       <Header />
       <main>
         <Routes>
           <Route path="/" element={<div>Home Page</div>} />
           <Route path="/food" element={<Foods />} />
+          <Route path="/food/new" element={<FoodForm />} />
           <Route path="/meal" element={<Meals />} />
         </Routes>
       </main>

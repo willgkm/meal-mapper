@@ -1,5 +1,4 @@
-import Table from 'react-bootstrap/Table';
-
+import {Table, Button } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import { Food } from '../../models/Food';
 import axios from 'axios';
@@ -22,6 +21,7 @@ export default function Foods() {
   return (
     <div className='container'> 
       <h2> FOODS </h2>
+      <Button href="/food/new" className='my-2'>New Food</Button>
       <Table striped bordered hover >
         <thead className="table-dark">
           <tr>
@@ -35,7 +35,7 @@ export default function Foods() {
         <tbody>
           {foods.map((item) =>{ 
             return (
-              <tr key={item.id+item.name} className="align-middle">
+              <tr key={item.id} className="align-middle">
                 <td className="text-center" >{item.id}</td>
                 <td >{item.name}</td>
                 <td className="text-center">{item.protein}</td>  
