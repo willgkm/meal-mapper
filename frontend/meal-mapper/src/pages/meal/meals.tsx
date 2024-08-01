@@ -64,7 +64,7 @@ export default function Meal() {
       <h2> Meals </h2>
       <Button href="/meal/new" className='my-2 mx-1' variant='success'>Create new meal</Button>
       <div className='mt-4 d-flex justify-content-between'>
-      <Row>
+      <Row className='col-12'>
         {meals.map((item) => {
           return ( 
             <Card key={item.id}  className=" mx-4 my-2 col-3  card" >
