@@ -44,10 +44,9 @@ export default function Meal() {
       meal.amountProtein = 0;
       meal.amountFat = 0;
       meal.description = "";
-      let foods ;
+      let foods = [] ;
       if(meal.foods !== null && meal.foods!.length > 0){
         meal.foods!.forEach((food)=>{
-          foods = []
           foods.push(food.name)
           meal.amountCalories = meal.amountCalories! + food.calories! 
           meal.amountCarbs =  meal.amountCarbs! + food.carbs! 
@@ -83,10 +82,10 @@ export default function Meal() {
             </ListGroup>
             <Card.Body className='d-flex justify-content-evenly'>
               <Card.Link href="#">
-                <Button onClick={() => edit(item.id)} >Edit</Button>
+                <Button onClick={() => edit(item.id!)} >Edit</Button>
                 </Card.Link>
               <Card.Link>
-                <Button onClick={() => deleteMeal(item.id)} variant='danger'>Delete</Button>
+                <Button onClick={() => deleteMeal(item.id!)} variant='danger'>Delete</Button>
               </Card.Link>
             </Card.Body>
           </Card>
