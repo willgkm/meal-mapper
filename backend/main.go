@@ -13,8 +13,9 @@ func main() {
 
 	database.Connect()
 
-	router := routes.SetupRouter()
+	r := routes.SetupRouter()
+	h := routes.SetupHandler()
 
 	log.Println("Server is running on port http://localhost" + (PORT))
-	log.Fatal(http.ListenAndServe(PORT, router))
+	log.Fatal(http.ListenAndServe(PORT, (h)(r)))
 }

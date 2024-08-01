@@ -6,13 +6,14 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
+
 	"github.com/sirupsen/logrus"
 )
 
 func SetupRouter() *mux.Router {
 	router := mux.NewRouter()
-
 	router.Use(loggingMiddleware)
+
 	router.HandleFunc("/food", controllers.CreateFood).Methods("POST")
 	router.HandleFunc("/food", controllers.GetFoods).Methods("GET")
 	router.HandleFunc("/food/{id:[0-9]+}", controllers.GetFoodById).Methods("GET")
