@@ -34,7 +34,25 @@ export default function FoodForm() {
     }
   }, [id]);
 
-  async function createFood(event: any) {
+  async function submit(event: any){ 
+    if(id !== null){
+      edit(event)
+    } else {
+      create(event)
+    }
+  }
+
+  async function edit(event: any) {
+    event.preventDefault();
+    try {
+      await axios.put(`http://localhost:8910/food/${id}`, food);
+      navigate('/food');
+    } catch (error) {
+      console.error('There was an error creating the food!', error);
+    }
+  };
+
+  async function create(event: any) {
     event.preventDefault();
     try {
       await axios.post('http://localhost:8910/food', food);
@@ -49,9 +67,9 @@ export default function FoodForm() {
       <h2> Create Food </h2>
       <Button href="/food" className='my-2' variant='secondary'> {"< Back"} </Button>
 
-        <Form onSubmit={createFood}>
+        <Form onSubmit={submit}>
 
-        <Form.Group className="mb-3" controlId="exampleForm.foodName">
+        <Form.Group className="mb-3" controlId="form.foodName">
           <Form.Label>Name</Form.Label>
           <Form.Control type="text" placeholder="Name" 
           value={food.name} 
@@ -60,14 +78,14 @@ export default function FoodForm() {
 
         <Row>
 
-          <Form.Group className="col mb-3" controlId="exampleForm.foodPortion">
+          <Form.Group className="col mb-3" controlId="form.foodPortion">
             <Form.Label>portion</Form.Label>
             <Form.Control type="number" placeholder="portion" 
             value={food.portion} 
             onChange={(event) => setFood( {...food, portion: parseInt(event.target.value)})}/>
           </Form.Group>
 
-          <Form.Group className="col mb-3" controlId="exampleForm.foodWeight">
+          <Form.Group className="col mb-3" controlId="form.foodWeight">
             <Form.Label>weight</Form.Label>
             <Form.Control type="number" placeholder="Weight in gr" 
             value={food.weight} 
@@ -76,14 +94,14 @@ export default function FoodForm() {
         </Row>
 
         <Row>
-          <Form.Group className="col mb-3" controlId="exampleForm.foodCalories">
+          <Form.Group className="col mb-3" controlId="form.foodCalories">
             <Form.Label>calories</Form.Label>
             <Form.Control type="number" placeholder="Calories in gr" 
             value={food.calories} 
             onChange={(event) => setFood( {...food, calories: parseInt(event.target.value)})}/>
           </Form.Group>
 
-          <Form.Group className="col mb-3" controlId="exampleForm.foodProtein">
+          <Form.Group className="col mb-3" controlId="form.foodProtein">
             <Form.Label>protein</Form.Label>
             <Form.Control type="number" placeholder="Protein in gr" 
             value={food.protein} 
@@ -92,14 +110,14 @@ export default function FoodForm() {
         </Row>
 
         <Row >
-          <Form.Group className="col mb-3" controlId="exampleForm.foodCarbs">
+          <Form.Group className="col mb-3" controlId="form.foodCarbs">
             <Form.Label>carbs</Form.Label>
             <Form.Control type="number" placeholder="Carbs in gr" 
             value={food.carbs} 
             onChange={(event) => setFood( {...food, carbs: parseInt(event.target.value)})}/>
           </Form.Group>
         
-          <Form.Group className="col mb-3" controlId="exampleForm.foodFat">
+          <Form.Group className="col mb-3" controlId="form.foodFat">
             <Form.Label>fat</Form.Label>
             <Form.Control type="number" placeholder="fat in gr" 
             value={food.fat} 
