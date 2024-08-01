@@ -26,8 +26,8 @@ export default function Foods() {
       setFoods(foods.filter(item => item.id !== id))
     })
     .catch(error => {
-      console.error('There was an error fetching the foods!', error);
-    });
+      console.error('There was an error deleting the foods!', error);
+    });   
   }
 
   async function edit(foodId: number) {

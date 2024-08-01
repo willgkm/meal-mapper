@@ -1,7 +1,7 @@
 import {Button,Form, Row} from 'react-bootstrap';
 
 import { useEffect, useState } from 'react';
-import { Food } from '../../models/Food';
+import { Food } from '../../../models/Food';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -29,7 +29,7 @@ export default function FoodForm() {
           setFood(response.data);
         })
         .catch(error => {
-          console.error('There was an error fetching the food!', error);
+          console.error(`There was an error fetching the food with id:${id} !`, error);
         });
     }
   }, [id]);
