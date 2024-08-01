@@ -42,15 +42,15 @@ export default function MealForm() {
   }
 
   async function submit(event: any){ 
-    if(id !== null){
-      edit(event)
+    event.preventDefault();
+    if(id ){
+      edit()
     } else {
-      create(event)
+      create()
     }
   }
   
-  async function create(event: any) {
-    event.preventDefault();
+  async function create() {
     try {
       await axios.post('http://localhost:8910/meal', meal);
       navigate('/meal');
@@ -59,8 +59,7 @@ export default function MealForm() {
     }
   };
 
-  async function edit(event: any) {
-    event.preventDefault();
+  async function edit() {
     try {
       await axios.put(`http://localhost:8910/meal/${id}`, meal);
       navigate('/meal');
@@ -135,7 +134,7 @@ export default function MealForm() {
                   {meal.foods?.map((item) => (
                     <tr key={item.id} className="align-middle">
                       <td className="text-center">
-                        <Button className="mx-1" variant='danger' onClick={() => removeFood(item.id)}>
+                        <Button className="mx-1" variant='danger' onClick={() => removeFood(item?.id)}>
                           <i className="bi bi-dash"></i>
                         </Button>
                       </td>
