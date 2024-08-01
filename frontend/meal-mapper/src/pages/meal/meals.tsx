@@ -1,4 +1,4 @@
-import { Button, Card, ListGroup } from 'react-bootstrap';
+import { Button, Card, ListGroup, Row } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -63,34 +63,36 @@ export default function Meal() {
     <div className='container'> 
       <h2> Meals </h2>
       <Button href="/meal/new" className='my-2 mx-1' variant='success'>Create new meal</Button>
-      <div className='mt-4 d-flex justify-content-evenly'>
-
-      {meals.map((item) => {
-        return ( 
-          <Card key={item.id}  className=" col-3  card" >
-            <Card.Body>
-              <Card.Title>{item.name}</Card.Title>
-              <Card.Text style={{minHeight:"5rem"}}>
-                Ingredients: {item .description}
-              </Card.Text>
-            </Card.Body>
-            <ListGroup className="list-group-flush">
-              <ListGroup.Item>Calories: {item.amountCalories}</ListGroup.Item>
-              <ListGroup.Item>Protein: {item.amountProtein}</ListGroup.Item>
-              <ListGroup.Item>Carbs: {item.amountCarbs}</ListGroup.Item>
-              <ListGroup.Item>Fat: {item.amountFat}</ListGroup.Item>
-            </ListGroup>
-            <Card.Body className='d-flex justify-content-evenly'>
-              <Card.Link href="#">
-                <Button onClick={() => edit(item.id!)} >Edit</Button>
+      <div className='mt-4 d-flex justify-content-between'>
+      <Row>
+        {meals.map((item) => {
+          return ( 
+            <Card key={item.id}  className=" mx-4 my-2 col-3  card" >
+              <Card.Body>
+                <Card.Title>Name: {item.name}</Card.Title>
+                <Card.Text style={{minHeight:"5rem"}}>
+                  Ingredients: {item .description}
+                </Card.Text>
+              </Card.Body>
+              <ListGroup className="list-group-flush">
+                <ListGroup.Item>Calories: {item.amountCalories}g</ListGroup.Item>
+                <ListGroup.Item>Protein: {item.amountProtein}g</ListGroup.Item>
+                <ListGroup.Item>Carbs: {item.amountCarbs}g</ListGroup.Item>
+                <ListGroup.Item>Fat: {item.amountFat}g</ListGroup.Item>
+              </ListGroup>
+              <Card.Body className='d-flex justify-content-evenly'>
+                <Card.Link href="#">
+                  <Button onClick={() => edit(item.id!)} >Edit</Button>
+                  </Card.Link>
+                <Card.Link>
+                  <Button onClick={() => deleteMeal(item.id!)} variant='danger'>Delete</Button>
                 </Card.Link>
-              <Card.Link>
-                <Button onClick={() => deleteMeal(item.id!)} variant='danger'>Delete</Button>
-              </Card.Link>
-            </Card.Body>
-          </Card>
-        )
-      })}
+              </Card.Body>
+            </Card>
+          )
+        })}
+      </Row>
+
       </div>
     </div>
   )
