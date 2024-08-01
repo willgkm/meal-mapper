@@ -45,14 +45,14 @@ export default function Meal() {
       meal.amountFat = 0;
       meal.description = "";
       let foods ;
-      if(meal.foods !== null && meal.foods.length > 0){
-        meal.foods.forEach((food)=>{
+      if(meal.foods !== null && meal.foods!.length > 0){
+        meal.foods!.forEach((food)=>{
           foods = []
           foods.push(food.name)
-          meal.amountCalories = meal.amountCalories + food.calories! 
-          meal.amountCarbs =  meal.amountCarbs + food.carbs! 
-          meal.amountProtein =  meal.amountProtein + food.protein! 
-          meal.amountFat =  meal.amountFat + food.fat!  
+          meal.amountCalories = meal.amountCalories! + food.calories! 
+          meal.amountCarbs =  meal.amountCarbs! + food.carbs! 
+          meal.amountProtein =  meal.amountProtein! + food.protein! 
+          meal.amountFat =  meal.amountFat! + food.fat!  
           meal.description = foods.join(", ");
         })
       }
@@ -64,7 +64,7 @@ export default function Meal() {
     <div className='container'> 
       <h2> Meals </h2>
       <Button href="/meal/new" className='my-2 mx-1' variant='success'>Create new meal</Button>
-      <div className='d-flex justify-content-evenly'>
+      <div className='mt-4 d-flex justify-content-evenly'>
 
       {meals.map((item) => {
         return ( 
