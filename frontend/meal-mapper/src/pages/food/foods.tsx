@@ -20,7 +20,7 @@ export default function Foods() {
       });
   }, []); 
 
-  async function deleteFood(id:number){
+  async function remove(id:number){
     axios.delete(`http://localhost:8910/food/${id}`)
     .then( () => {
       setFoods(foods.filter(item => item.id !== id))
@@ -36,7 +36,7 @@ export default function Foods() {
 
   return (
     <div className='container'> 
-      <h2> FOODS </h2>
+      <h2> Food </h2>
       <Button href="/food/new" className='my-2'>New Food</Button>
       <Table striped bordered hover >
         <thead className="table-dark">
@@ -46,7 +46,7 @@ export default function Foods() {
             <th className="text-center">Protein</th>
             <th className="text-center">Carbs</th>
             <th className="text-center">Calories</th>
-            <th className="text-center">Actions</th>
+            <th className="text-center" style={{width:"12rem"}}>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -60,10 +60,10 @@ export default function Foods() {
                 <td className="text-center">{item.calories}</td>
                 <td className="text-center">
                   <Button className="mx-1" variant='info' onClick={() => edit(item.id)}>
-                    <i className="bi bi-file-earmark-text"></i>
+                    Edit
                   </Button>
-                  <Button className="mx-1" variant='danger' onClick={() => deleteFood(item.id)}>
-                    <i className="bi bi-trash"></i>
+                  <Button className="mx-1" variant='danger' onClick={() => remove(item.id)}>
+                    Remove
                   </Button>
                 </td>
               </tr>

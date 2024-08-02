@@ -7,6 +7,7 @@ import Foods from './pages/food/foods';
 import Meals from './pages/meal/meals';
 import FoodForm from './pages/food/food-form/foods-form';
 import MealForm from './pages/meal/meal-form/meal-form';
+import HomePage from './pages/home/homepage';
 
 function App() {
 
@@ -16,7 +17,7 @@ function App() {
       <Header />
       <main>
         <Routes>
-          <Route path="/" element={<div>Home Page</div>} />
+          <Route path="/" element={<HomePage/>} />
           <Route path="/food" element={<Foods />} />
           <Route path="/food/new" element={<FoodForm />} />
           <Route path="/food/:id" element={<FoodForm />} />
