@@ -38,6 +38,8 @@ export default function Foods() {
     <div className='container'> 
       <h2> Food </h2>
       <Button href="/food/new" className='my-2'>New Food</Button>
+      {foods ? (
+
       <Table striped bordered hover >
         <thead className="table-dark">
           <tr>
@@ -70,9 +72,13 @@ export default function Foods() {
               )
             }
           )}
-
         </tbody>
       </Table>
+      ) : (
+        <div>
+          <h4>There is no food available. you can create on clicking on "New food"</h4>
+        </div>
+      )}
     </div>
   )
 }
