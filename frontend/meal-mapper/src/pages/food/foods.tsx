@@ -37,7 +37,7 @@ export default function Foods() {
   return (
     <div className='container'> 
       <h2> Food </h2>
-      <Button href="/food/new" className='my-2'>New Food</Button>
+      <Button href="/food/new" className='my-2' variant='success'>New Food</Button>
       {foods ? (
 
       <Table striped bordered hover >
@@ -76,7 +76,7 @@ export default function Foods() {
       </Table>
       ) : (
         <div>
-          <h4>There is no food available. you can create on clicking on "New food"</h4>
+          <h4>There is no food available. You can create on clicking on "New Food"</h4>
         </div>
       )}
     </div>
