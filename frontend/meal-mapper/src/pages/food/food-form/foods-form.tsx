@@ -35,7 +35,7 @@ export default function FoodForm() {
   }, [id]);
 
   async function submit(event: any){ 
-    if(id !== null){
+    if(id){
       edit(event)
     } else {
       create(event)
