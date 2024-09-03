@@ -11,14 +11,15 @@ MealMapper is a project aimed at helping with meal planning and management by al
 
 ## About
 
-MealMapper is an application that allows users to register foods with detailed nutritional information and use these registered foods to create meals. The application calculates the total nutritional information of meals based on the selected foods and quantities. Although it is more basic than FatSecret, it offers essential functionality for those looking to track nutritional intake in a practical and efficient way.
+MealMapper is an application that allows users to register foods with detailed nutritional information and create meals using these registered foods. The application calculates the total nutritional information of meals based on selected foods and their respective quantities. MealMapper provides essential functionality for tracking nutritional intake in an efficient and user-friendly manner.
 
 ## Features
 
-- **Food Registration:** Allows the entry of foods with detailed nutritional information.
-- **Meal Creation:** Uses registered foods to create meals.
-- **Nutritional Calculation:** Provides total nutritional information of meals based on the selected foods and quantities.
-- **Modern Frontend:** Interface developed with React and Vite, using Bootstrap 5.2 for styling.
+- **Food Registration:** Register foods with comprehensive nutritional information.
+- **Meal Creation:** Assemble meals using registered foods.
+- **Nutritional Calculation:** Automatically calculate the total nutritional content of meals based on selected foods and quantities.
+- **Modern Frontend:** A user interface built with React and Vite, styled with Bootstrap 5.2.
+- **Local Database:** Utilizes SQLite3 to provide a local database within the user's application, ensuring data persistence and easy access.
 
 ## Installation
 
@@ -28,6 +29,7 @@ Before starting, make sure you have the following versions installed:
 
 - **Golang:** 1.23.0
 - **Node.js:** 22.6.0
+- **SQLite3 :** 3.46.1
 
 First this is to clone the repository 
 
