@@ -79,14 +79,14 @@ export default function FoodForm() {
         <Row>
 
           <Form.Group className="col mb-3" controlId="form.foodPortion">
-            <Form.Label>portion</Form.Label>
+            <Form.Label>Portion</Form.Label>
             <Form.Control type="number" placeholder="portion" 
             value={food.portion} 
             onChange={(event) => setFood( {...food, portion: parseInt(event.target.value)})}/>
           </Form.Group>
 
           <Form.Group className="col mb-3" controlId="form.foodWeight">
-            <Form.Label>weight</Form.Label>
+            <Form.Label>Weight</Form.Label>
             <Form.Control type="number" placeholder="Weight in gr" 
             value={food.weight} 
             onChange={(event) => setFood( {...food, weight: parseInt(event.target.value)})}/>
@@ -95,14 +95,14 @@ export default function FoodForm() {
 
         <Row>
           <Form.Group className="col mb-3" controlId="form.foodCalories">
-            <Form.Label>calories</Form.Label>
+            <Form.Label>Calories</Form.Label>
             <Form.Control type="number" placeholder="Calories in gr" 
             value={food.calories} 
             onChange={(event) => setFood( {...food, calories: parseInt(event.target.value)})}/>
           </Form.Group>
 
           <Form.Group className="col mb-3" controlId="form.foodProtein">
-            <Form.Label>protein</Form.Label>
+            <Form.Label>Protein</Form.Label>
             <Form.Control type="number" placeholder="Protein in gr" 
             value={food.protein} 
             onChange={(event) => setFood( {...food, protein: parseInt(event.target.value)})}/>
@@ -111,14 +111,14 @@ export default function FoodForm() {
 
         <Row >
           <Form.Group className="col mb-3" controlId="form.foodCarbs">
-            <Form.Label>carbs</Form.Label>
+            <Form.Label>Carbs</Form.Label>
             <Form.Control type="number" placeholder="Carbs in gr" 
             value={food.carbs} 
             onChange={(event) => setFood( {...food, carbs: parseInt(event.target.value)})}/>
           </Form.Group>
         
           <Form.Group className="col mb-3" controlId="form.foodFat">
-            <Form.Label>fat</Form.Label>
+            <Form.Label>Fat</Form.Label>
             <Form.Control type="number" placeholder="fat in gr" 
             value={food.fat} 
             onChange={(event) => setFood( {...food, fat: parseInt(event.target.value)})}/>
