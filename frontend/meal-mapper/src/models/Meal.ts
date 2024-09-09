@@ -9,4 +9,5 @@ export type Meal = {
   amountCarbs?: number;
   amountProtein?: number;
   amountFat?: number;
+  amountWeight?: number;
 }

@@ -10,7 +10,7 @@ export default function FoodForm() {
 
   const [food, setFood] = useState<Food>({
     id: 0,
-    portion:  undefined,
+    portion:  1,
     weight:  undefined,
     name: undefined,
     calories: undefined,
@@ -35,12 +35,21 @@ export default function FoodForm() {
   }, [id]);
 
   async function submit(event: any){ 
+    if (verifyFields()) {
+      alert("We need a valid name before save")
+      return; 
+    } 
     if(id){
       edit(event)
     } else {
       create(event)
     }
   }
+
+  function verifyFields() { 
+    if (food.name && food.name.trim() !== "") return false;
+    return true;
+  };
 
   async function edit(event: any) {
     event.preventDefault();
@@ -79,7 +88,7 @@ export default function FoodForm() {
         <Row>
 
           <Form.Group className="col mb-3" controlId="form.foodPortion">
-            <Form.Label>Portion</Form.Label>
+            <Form.Label>Portion/Servings</Form.Label>
             <Form.Control type="number" placeholder="portion" 
             value={food.portion} 
             onChange={(event) => setFood( {...food, portion: parseInt(event.target.value)})}/>
@@ -96,7 +105,7 @@ export default function FoodForm() {
         <Row>
           <Form.Group className="col mb-3" controlId="form.foodCalories">
             <Form.Label>Calories</Form.Label>
-            <Form.Control type="number" placeholder="Calories in gr" 
+            <Form.Control type="number" placeholder="Calories" 
             value={food.calories} 
             onChange={(event) => setFood( {...food, calories: parseInt(event.target.value)})}/>
           </Form.Group>

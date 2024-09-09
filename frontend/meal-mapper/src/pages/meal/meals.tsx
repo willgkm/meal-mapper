@@ -42,6 +42,7 @@ export default function Meal() {
         meal.amountCarbs = 0;
         meal.amountProtein = 0;
         meal.amountFat = 0;
+        meal.amountWeight = 0;
         meal.description = "";
         let foods = [];
         if (meal.foods !== null && meal.foods!.length > 0) {
@@ -51,6 +52,7 @@ export default function Meal() {
             meal.amountCarbs = meal.amountCarbs! + food.carbs!
             meal.amountProtein = meal.amountProtein! + food.protein!
             meal.amountFat = meal.amountFat! + food.fat!
+            meal.amountWeight = meal.amountWeight! + food.weight!
             meal.description = foods.join(", ");
           })
         }
@@ -76,10 +78,11 @@ export default function Meal() {
                     </Card.Text>
                   </Card.Body>
                   <ListGroup className="list-group-flush">
-                    <ListGroup.Item>Calories: {item.amountCalories}g</ListGroup.Item>
-                    <ListGroup.Item>Protein: {item.amountProtein}g</ListGroup.Item>
-                    <ListGroup.Item>Carbs: {item.amountCarbs}g</ListGroup.Item>
-                    <ListGroup.Item>Fat: {item.amountFat}g</ListGroup.Item>
+                    <ListGroup.Item>Weight: {item.amountWeight} g</ListGroup.Item>
+                    <ListGroup.Item>Calories: {item.amountCalories} </ListGroup.Item>
+                    <ListGroup.Item>Protein: {item.amountProtein} g</ListGroup.Item>
+                    <ListGroup.Item>Carbs: {item.amountCarbs} g</ListGroup.Item>
+                    <ListGroup.Item>Fat: {item.amountFat} g</ListGroup.Item>
                   </ListGroup>
                   <Card.Body className='d-flex justify-content-evenly'>
                     <Card.Link href="#">

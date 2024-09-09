@@ -43,11 +43,12 @@ export default function Foods() {
       <Table striped bordered hover >
         <thead className="table-dark">
           <tr>
-            <th className="text-center">ID</th>
+            <th className="text-center" style={{width:"5rem"}} >ID</th>
             <th>Name</th>
-            <th className="text-center">Protein</th>
-            <th className="text-center">Carbs</th>
-            <th className="text-center">Calories</th>
+            <th className="text-center px-3" style={{width:"5rem"}}>Weight</th>
+            <th className="text-center px-3" style={{width:"5rem"}}>Calories</th>
+            <th className="text-center px-3" style={{width:"5rem"}}>Protein</th>
+            <th className="text-center px-3" style={{width:"5rem"}}>Carbs</th>
             <th className="text-center" style={{width:"12rem"}}>Actions</th>
           </tr>
         </thead>
@@ -55,11 +56,12 @@ export default function Foods() {
           {foods.map((item) =>{ 
             return (
               <tr key={item.id} className="align-middle">
-                <td className="text-center" >{item.id}</td>
+                <td className="text-center"  >{item.id}</td>
                 <td >{item.name}</td>
-                <td className="text-center">{item.protein}</td>  
-                <td className="text-center">{item.carbs}</td>
-                <td className="text-center">{item.calories}</td>
+                <td className="text-center">{item.weight} g</td>  
+                <td className="text-center">{item.calories} </td>
+                <td className="text-center">{item.protein} g</td>  
+                <td className="text-center">{item.carbs} g</td>
                 <td className="text-center">
                   <Button className="mx-1" variant='info' onClick={() => edit(item.id)}>
                     Edit

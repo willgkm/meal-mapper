@@ -50,6 +50,18 @@ export default function MealForm() {
     }
   }
 
+  function validName() {
+    return meal.name && meal.name.trim() !== "";
+  }
+
+  function validFoodsAmount() {
+    return meal.foods && meal.foods.length >= 2;
+  }
+
+  function disableButton() {
+    return !(validName() && validFoodsAmount()); // Habilita se ambas as validações forem verdadeiras
+  }
+
   async function create() {
     try {
       await axios.post('http://localhost:8910/meal', meal);
@@ -103,6 +115,7 @@ export default function MealForm() {
                   <thead className="table-dark">
                     <tr>
                       <th>Name</th>
+                      <th className="text-center" style={{ width: "5rem" }}>Weight</th>
                       <th className="text-center" style={{ width: "5rem" }}>Add</th>
                     </tr>
                   </thead>
@@ -110,6 +123,7 @@ export default function MealForm() {
                     {foods.map((item) => (
                       <tr key={item.id} className="align-middle">
                         <td>{item.name}</td>
+                        <td className="text-center">{item.weight} g </td>
                         <td className="text-center">
                           <Button className="mx-1" variant='success' onClick={() => addFood(item)}>
                             <i className="bi bi-plus"></i>
@@ -123,12 +137,14 @@ export default function MealForm() {
             </Col>
             <Col className='col-6'>
               <Form.Group className="mb-3" controlId="form.selectedFoods">
-                <Form.Label>Foods selected</Form.Label>
+                <Form.Label>Foods selected (minimum 2) </Form.Label>
                 <Table striped bordered hover>
                   <thead className="table-dark">
                     <tr>
                       <th className="text-center" style={{ width: "5rem" }}>Remove</th>
                       <th>Name</th>
+                      <th className="text-center" style={{ width: "5rem" }}>Weight</th>
+
                     </tr>
                   </thead>
                   <tbody>
@@ -140,6 +156,7 @@ export default function MealForm() {
                           </Button>
                         </td>
                         <td>{item.name}</td>
+                        <td className="text-center">{item.weight} g </td>
                       </tr>
                     ))}
                   </tbody>
@@ -148,7 +165,7 @@ export default function MealForm() {
             </Col>
           </Row>
           <Row className='d-grid gap-2 d-md-flex justify-content-md-end'>
-            <Button style={{ width: "100px" }} className='me-md-2 mb-2' type="submit" variant="success">
+            <Button style={{ width: "100px" }} className='me-md-2 mb-2' type="submit" variant="success" disabled={disableButton()}>
               Submit
             </Button>
           </Row>
