@@ -11,8 +11,6 @@ import (
 
 var DB *sql.DB
 
-//TODO: change the database for a postgress one.
-
 func Connect() {
 	var err error
 	DB, err = sql.Open("sqlite3", "./mealmapper.db")
