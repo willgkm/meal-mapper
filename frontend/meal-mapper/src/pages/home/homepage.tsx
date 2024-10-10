@@ -22,9 +22,6 @@ export default function HomePage() {
                 You can add the foods you consume daily, along with all the relevant nutritional information such as calories, protein, fat, and carbohydrates. 
                 Then, you can create meals by combining different foods and view a complete nutritional summary of the meal.
               </Card.Text>
-              <Card.Text>
-                Our system also allows you to track your meals throughout the day, helping you monitor your nutrient intake and keeping you informed about your diet.
-              </Card.Text>
             </Card.Body>
           </Card>
         </Col>
